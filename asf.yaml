@@ -1,0 +1,6 @@
+github:
+  description: This bundle defines the Apache Sling Servlets Resolver's API
+  homepage: https://sling.apache.org
+  labels:
+    - sling
+    - java
