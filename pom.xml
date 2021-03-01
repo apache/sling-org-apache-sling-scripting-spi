@@ -27,18 +27,18 @@
         <relativePath />
     </parent>
 
-    <artifactId>org.apache.sling.servlets.resolver.api</artifactId>
+    <artifactId>org.apache.sling.scripting.spi</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
-    <name>Apache Sling Servlets Resolver API</name>
+    <name>Apache Sling Scripting SPI</name>
     <description>
-        This bundle defines the Apache Sling Servlets Resolver's API
+        This bundle defines the Apache Sling Scripting SPI
     </description>
 
     <scm>
-        <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-servlets-resolver-api.git</connection>
-        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-servlets-resolver-api.git</developerConnection>
-        <url>https://gitbox.apache.org/repos/asf?p=sling-org-apache-sling-servlets-resolver-api.git</url>
+        <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-scripting-spi.git</connection>
+        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-scripting-spi.git</developerConnection>
+        <url>https://gitbox.apache.org/repos/asf?p=sling-org-apache-sling-scripting-spi.git</url>
       <tag>HEAD</tag>
   </scm>
 
