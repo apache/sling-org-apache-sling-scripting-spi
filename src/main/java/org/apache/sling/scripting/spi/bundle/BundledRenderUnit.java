@@ -77,6 +77,8 @@ public interface BundledRenderUnit {
      * Bundle bundle = bundledRenderUnit.getBundle();
      * Classloader bundleClassloader = bundle.adapt(BundleWiring.class).getClassLoader();
      * </pre>
+     *
+     * @return the bundle providing this unit
      */
     @NotNull Bundle getBundle();
 
@@ -127,7 +129,8 @@ public interface BundledRenderUnit {
 
     /**
      * This method will execute / evaluate the wrapped script or precompiled script with the given request.
-     *
+     * @param request the request
+     * @param response the response
      * @throws ScriptException if the execution leads to an error
      */
     void eval(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) throws ScriptException;

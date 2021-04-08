@@ -31,11 +31,11 @@ import org.osgi.framework.Version;
  *
  * <p>The following patterns are supported for parsing:</p>
  * <ol>
- * <li><tt>a/b/c</tt> - path-based</li>
- * <li><tt>a/b/c/1.0.0</tt> - path-based, versioned</li>
- * <li><tt>a.b.c</tt> - Java package name</li>
- * <li><tt>a.b.c/1.0.0</tt> - Java package name, versioned</li>
- * <li><tt>a</tt> - flat (sub-set of path-based)</li>
+ * <li><code>a/b/c</code> - path-based</li>
+ * <li><code>a/b/c/1.0.0</code> - path-based, versioned</li>
+ * <li><code>a.b.c</code> - Java package name</li>
+ * <li><code>a.b.c/1.0.0</code> - Java package name, versioned</li>
+ * <li><code>a</code> - flat (sub-set of path-based)</li>
  * </ol>
  */
 public final class ResourceType {
@@ -102,11 +102,11 @@ public final class ResourceType {
      * Given a {@code resourceTypeString}, this method will extract a {@link ResourceType} object.
      * <p>The accepted patterns are:</p>
      * <ol>
-     * <li><tt>a/b/c</tt> - path-based</li>
-     * <li><tt>a/b/c/1.0.0</tt> - path-based, versioned</li>
-     * <li><tt>a.b.c</tt> - Java package name</li>
-     * <li><tt>a.b.c/1.0.0</tt> - Java package name, versioned</li>
-     * <li><tt>a</tt> - flat (sub-set of path-based)</li>
+     * <li><code>a/b/c</code> - path-based</li>
+     * <li><code>a/b/c/1.0.0</code> - path-based, versioned</li>
+     * <li><code>a.b.c</code> - Java package name</li>
+     * <li><code>a.b.c/1.0.0</code> - Java package name, versioned</li>
+     * <li><code>a</code> - flat (sub-set of path-based)</li>
      * </ol>
      *
      * @param resourceTypeString the resource type string to parse
