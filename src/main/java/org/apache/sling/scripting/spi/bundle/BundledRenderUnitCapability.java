@@ -21,6 +21,7 @@ package org.apache.sling.scripting.spi.bundle;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.sling.api.resource.type.ResourceType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;

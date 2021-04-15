@@ -16,7 +16,7 @@
  ~ specific language governing permissions and limitations
  ~ under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package org.apache.sling.scripting.spi.bundle;
+package org.apache.sling.api.resource.type;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -43,11 +43,11 @@ public final class ResourceType {
     private static final Pattern versionPattern = Pattern.compile("[\\d\\.]+(-.*)*$");
 
     private final String type;
-    private final String version;
+    private final Version version;
     private final String resourceLabel;
     private final String toString;
 
-    private ResourceType(@NotNull String type, @Nullable String version) {
+    private ResourceType(@NotNull String type, @Nullable Version version) {
         this.type = type;
         this.version = version;
         if (type.lastIndexOf('/') != -1) {
@@ -89,7 +89,7 @@ public final class ResourceType {
      * @return the version, if available; {@code null} otherwise
      */
     @Nullable
-    public String getVersion() {
+    public Version getVersion() {
         return version;
     }
 
@@ -116,14 +116,14 @@ public final class ResourceType {
     @NotNull
     public static ResourceType parseResourceType(@NotNull String resourceTypeString) {
         String type = StringUtils.EMPTY;
-        String version = null;
+        Version version = null;
         if (StringUtils.isNotEmpty(resourceTypeString)) {
             int lastSlash = resourceTypeString.lastIndexOf('/');
             if (lastSlash != -1 && !resourceTypeString.endsWith("/")) {
                 String versionString = resourceTypeString.substring(lastSlash + 1);
                 if (versionPattern.matcher(versionString).matches()) {
                     try {
-                        version = Version.parseVersion(versionString).toString();
+                        version = Version.parseVersion(versionString);
                         type = resourceTypeString.substring(0, lastSlash);
                     } catch (IllegalArgumentException e) {
                         type = resourceTypeString;

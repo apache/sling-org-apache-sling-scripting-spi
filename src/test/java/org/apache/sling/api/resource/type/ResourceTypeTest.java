@@ -16,10 +16,12 @@
  ~ specific language governing permissions and limitations
  ~ under the License.
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-package org.apache.sling.scripting.spi.bundle;
+package org.apache.sling.api.resource.type;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.sling.api.resource.type.ResourceType;
 import org.junit.Test;
+import org.osgi.framework.Version;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -39,7 +41,7 @@ public class ResourceTypeTest {
         ResourceType t1 = ResourceType.parseResourceType("a/b/c/1.0.0");
         assertEquals("a/b/c", t1.getType());
         assertEquals("c", t1.getResourceLabel());
-        assertEquals("1.0.0", t1.getVersion());
+        assertEquals(new Version("1.0.0"), t1.getVersion());
     }
 
     @Test
@@ -55,7 +57,7 @@ public class ResourceTypeTest {
         ResourceType t1 = ResourceType.parseResourceType("a/1.2.3");
         assertEquals("a", t1.getType());
         assertEquals("a", t1.getResourceLabel());
-        assertEquals("1.2.3", t1.getVersion());
+        assertEquals(new Version("1.2.3"), t1.getVersion());
     }
 
     @Test
@@ -71,7 +73,7 @@ public class ResourceTypeTest {
         ResourceType t1 = ResourceType.parseResourceType("a.b.c/42.0.0");
         assertEquals("a.b.c", t1.getType());
         assertEquals("c", t1.getResourceLabel());
-        assertEquals("42.0.0", t1.getVersion());
+        assertEquals(new Version("42.0.0"), t1.getVersion());
     }
 
     @Test(expected = IllegalArgumentException.class)
