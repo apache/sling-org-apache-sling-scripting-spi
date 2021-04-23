@@ -34,7 +34,7 @@ import org.osgi.framework.BundleContext;
 /**
  * <p>
  * A {@code BundledRenderUnit} represents a pre-packaged script or precompiled script (Java class) that will be executed in order to
- * render a {@link org.apache.sling.api.SlingHttpServletRequest}.
+ * render a {@link HttpServletRequest}.
  * </p>
  * <p>
  * The {@code BundledRenderUnit} provider module is responsible for defining how a unit is executed. However, when executing the unit in the
@@ -46,7 +46,7 @@ import org.osgi.framework.BundleContext;
 public interface BundledRenderUnit {
 
     /**
-     * The variable available in the {@link javax.script.Bindings} associated to a {@link org.apache.sling.api.SlingHttpServletRequest} if
+     * The variable available in the {@link javax.script.Bindings} associated to a {@link HttpServletRequest} if
      * that request is served by a {@code BundledRenderUnit}.
      */
     String VARIABLE = BundledRenderUnit.class.getName();
