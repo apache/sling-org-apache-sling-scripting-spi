@@ -18,72 +18,77 @@
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 package org.apache.sling.api.resource.type;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apache.commons.lang3.StringUtils;
-import org.apache.sling.api.resource.type.ResourceType;
 import org.junit.Test;
 import org.osgi.framework.Version;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 public class ResourceTypeTest {
+
+    private void assertResourceType(String resourceTypeString,
+            String expectedType, String expectedResourceLabel,
+            Version expectedVersion) {
+        ResourceType t1 = ResourceType.parseResourceType(resourceTypeString);
+        assertEquals(expectedType, t1.getType());
+        assertEquals(expectedResourceLabel, t1.getResourceLabel());
+        assertEquals(expectedVersion, t1.getVersion());
+    }
 
     @Test
     public void testSlashNoVersion() {
-        ResourceType t1 = ResourceType.parseResourceType("a/b/c");
-        assertEquals("a/b/c", t1.getType());
-        assertEquals("c", t1.getResourceLabel());
-        assertNull(t1.getVersion());
+        assertResourceType("a/b/c", "a/b/c", "c", null);
     }
 
     @Test
     public void testSlashVersion() {
-        ResourceType t1 = ResourceType.parseResourceType("a/b/c/1.0.0");
-        assertEquals("a/b/c", t1.getType());
-        assertEquals("c", t1.getResourceLabel());
-        assertEquals(new Version("1.0.0"), t1.getVersion());
+        assertResourceType("a/b/c/1.0.0", "a/b/c", "c", new Version("1.0.0"));
     }
 
     @Test
     public void testOneSegmentNoVersion() {
-        ResourceType t1 = ResourceType.parseResourceType("a");
-        assertEquals("a", t1.getType());
-        assertEquals("a", t1.getResourceLabel());
-        assertNull(t1.getVersion());
+        assertResourceType("a", "a", "a", null);
     }
 
     @Test
     public void testOneSegmentVersion() {
-        ResourceType t1 = ResourceType.parseResourceType("a/1.2.3");
-        assertEquals("a", t1.getType());
-        assertEquals("a", t1.getResourceLabel());
-        assertEquals(new Version("1.2.3"), t1.getVersion());
+        assertResourceType("a/1.2.3", "a", "a", new Version("1.2.3"));
     }
 
     @Test
     public void testDotNoVersion() {
-        ResourceType t1 = ResourceType.parseResourceType("a.b.c");
-        assertEquals("a.b.c", t1.getType());
-        assertEquals("c", t1.getResourceLabel());
-        assertNull(t1.getVersion());
+        assertResourceType("a.b.c", "a.b.c", "c", null);
     }
 
     @Test
     public void testDotVersion() {
-        ResourceType t1 = ResourceType.parseResourceType("a.b.c/42.0.0");
-        assertEquals("a.b.c", t1.getType());
-        assertEquals("c", t1.getResourceLabel());
-        assertEquals(new Version("42.0.0"), t1.getVersion());
+        assertResourceType("a.b.c/42.0.0", "a.b.c", "c", new Version("42.0.0"));
+    }
+
+    /**
+     * Test when the version segment is not parsable as a version
+     */
+    @Test
+    public void testDotInvalidVersion() {
+        assertResourceType("a.b.c/1.2.#@$abc", "a.b.c/1.2.#@$abc", "1.2.#@$abc", null);
+    }
+
+    /**
+     * Test when the version segment is not parsable as a version
+     */
+    @Test
+    public void testSlashInvalidVersion() {
+        assertResourceType("a/b/c/1.0.#@$abc", "a/b/c/1.0.#@$abc", "1.0.#@$abc", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyString() {
-        ResourceType t1 = ResourceType.parseResourceType(StringUtils.EMPTY);
+        ResourceType.parseResourceType(StringUtils.EMPTY);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNull() {
-        ResourceType t1 = ResourceType.parseResourceType(null);
+        ResourceType.parseResourceType(null); // NOSONAR
     }
 
 }

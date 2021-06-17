@@ -40,7 +40,7 @@ import org.osgi.framework.Version;
  */
 public final class ResourceType {
 
-    private static final Pattern versionPattern = Pattern.compile("[\\d\\.]+(-.*)*$");
+    private static final Pattern versionPattern = Pattern.compile("(\\d{1,10})(\\.(\\d{1,10})(\\.(\\d{1,10})(\\.([-\\w]+))?)?)?$");
 
     private final String type;
     private final Version version;
