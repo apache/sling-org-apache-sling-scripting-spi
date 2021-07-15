@@ -40,7 +40,11 @@
         <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-scripting-spi.git</developerConnection>
         <url>https://gitbox.apache.org/repos/asf?p=sling-org-apache-sling-scripting-spi.git</url>
       <tag>HEAD</tag>
-  </scm>
+    </scm>
+
+    <properties>
+        <project.build.outputTimestamp>2021-06-07T17:05:54Z</project.build.outputTimestamp>
+    </properties>
 
     <build>
         <plugins>
