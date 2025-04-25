@@ -1,27 +1,26 @@
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Licensed to the Apache Software Foundation (ASF) under one
- ~ or more contributor license agreements.  See the NOTICE file
- ~ distributed with this work for additional information
- ~ regarding copyright ownership.  The ASF licenses this file
- ~ to you under the Apache License, Version 2.0 (the
- ~ "License"); you may not use this file except in compliance
- ~ with the License.  You may obtain a copy of the License at
- ~
- ~   http://www.apache.org/licenses/LICENSE-2.0
- ~
- ~ Unless required by applicable law or agreed to in writing,
- ~ software distributed under the License is distributed on an
- ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- ~ KIND, either express or implied.  See the License for the
- ~ specific language governing permissions and limitations
- ~ under the License.
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package org.apache.sling.api.resource.type;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.framework.Version;
@@ -40,7 +39,8 @@ import org.osgi.framework.Version;
  */
 public final class ResourceType {
 
-    private static final Pattern versionPattern = Pattern.compile("(\\d{1,10})(\\.(\\d{1,10})(\\.(\\d{1,10})(\\.([-\\w]+))?)?)?$");
+    private static final Pattern versionPattern =
+            Pattern.compile("(\\d{1,10})(\\.(\\d{1,10})(\\.(\\d{1,10})(\\.([-\\w]+))?)?)?$");
 
     private final String type;
     private final Version version;
@@ -115,9 +115,9 @@ public final class ResourceType {
      */
     @NotNull
     public static ResourceType parseResourceType(@NotNull String resourceTypeString) {
-        String type = StringUtils.EMPTY;
+        String type = "";
         Version version = null;
-        if (StringUtils.isNotEmpty(resourceTypeString)) {
+        if (resourceTypeString != null && !resourceTypeString.isEmpty()) {
             int lastSlash = resourceTypeString.lastIndexOf('/');
             if (lastSlash != -1 && !resourceTypeString.endsWith("/")) {
                 String versionString = resourceTypeString.substring(lastSlash + 1);
@@ -135,8 +135,9 @@ public final class ResourceType {
                 type = resourceTypeString;
             }
         }
-        if (StringUtils.isEmpty(type)) {
-            throw new IllegalArgumentException(String.format("Cannot extract a type for the resourceTypeString %s.", resourceTypeString));
+        if (type.isEmpty()) {
+            throw new IllegalArgumentException(
+                    String.format("Cannot extract a type for the resourceTypeString %s.", resourceTypeString));
         }
         return new ResourceType(type, version);
     }
@@ -153,8 +154,9 @@ public final class ResourceType {
         }
         if (obj instanceof ResourceType) {
             ResourceType other = (ResourceType) obj;
-            return Objects.equals(type, other.type) && Objects.equals(version, other.version) && Objects.equals(resourceLabel,
-                    other.resourceLabel);
+            return Objects.equals(type, other.type)
+                    && Objects.equals(version, other.version)
+                    && Objects.equals(resourceLabel, other.resourceLabel);
         }
         return false;
     }

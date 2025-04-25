@@ -1,30 +1,32 @@
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ~ Licensed to the Apache Software Foundation (ASF) under one
- ~ or more contributor license agreements.  See the NOTICE file
- ~ distributed with this work for additional information
- ~ regarding copyright ownership.  The ASF licenses this file
- ~ to you under the Apache License, Version 2.0 (the
- ~ "License"); you may not use this file except in compliance
- ~ with the License.  You may obtain a copy of the License at
- ~
- ~   http://www.apache.org/licenses/LICENSE-2.0
- ~
- ~ Unless required by applicable law or agreed to in writing,
- ~ software distributed under the License is distributed on an
- ~ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- ~ KIND, either express or implied.  See the License for the
- ~ specific language governing permissions and limitations
- ~ under the License.
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package org.apache.sling.scripting.spi.bundle;
+
+import javax.script.ScriptException;
 
 import java.io.InputStream;
 import java.util.Set;
 
-import javax.script.ScriptException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.sling.api.wrappers.JakartaToJavaxRequestWrapper;
+import org.apache.sling.api.wrappers.JakartaToJavaxResponseWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
@@ -66,7 +68,8 @@ public interface BundledRenderUnit {
      *
      * @return the name {@code this BundledRenderUnit}
      */
-    @NotNull String getName();
+    @NotNull
+    String getName();
 
     /**
      * Returns the {@link Bundle} the publishing bundle of this unit (not to be confused with the provider module, which is the module that
@@ -80,7 +83,8 @@ public interface BundledRenderUnit {
      *
      * @return the bundle providing this unit
      */
-    @NotNull Bundle getBundle();
+    @NotNull
+    Bundle getBundle();
 
     /**
      * Returns the {@link BundleContext} to use for this unit. This method can be useful for getting an instance of the publishing bundle's
@@ -88,7 +92,8 @@ public interface BundledRenderUnit {
      *
      * @return the bundle context of the bundle publishing this unit
      */
-    @NotNull BundleContext getBundleContext();
+    @NotNull
+    BundleContext getBundleContext();
 
     /**
      * Returns the {@code Set} of {@link TypeProvider}s which are related to this unit.
@@ -96,7 +101,8 @@ public interface BundledRenderUnit {
      * @return the set of providers; if the unit doesn't have any inheritance chains, then the set will contain only one {@link
      * TypeProvider}
      */
-    @NotNull Set<TypeProvider> getTypeProviders();
+    @NotNull
+    Set<TypeProvider> getTypeProviders();
 
     /**
      * Retrieves an OSGi runtime dependency of the wrapped script identified by the passed {@code className} parameter.
@@ -105,7 +111,8 @@ public interface BundledRenderUnit {
      * @param <T>       the expected service type
      * @return an instance of the {@link T} or {@code null}
      */
-    @Nullable <T> T getService(@NotNull String className);
+    @Nullable
+    <T> T getService(@NotNull String className);
 
     /**
      * Retrieves multiple instances of an OSGi runtime dependency of the wrapped script identified by the passed {@code className}
@@ -117,7 +124,8 @@ public interface BundledRenderUnit {
      * @param <T>       the expected service type
      * @return an instance of the {@link T} or {@code null}
      */
-    @Nullable <T> T[] getServices(@NotNull String className, @Nullable String filter);
+    @Nullable
+    <T> T[] getServices(@NotNull String className, @Nullable String filter);
 
     /**
      * Returns the path of this executable in the resource type hierarchy. The path can be relative to the search paths or absolute.
@@ -132,8 +140,26 @@ public interface BundledRenderUnit {
      * @param request the request
      * @param response the response
      * @throws ScriptException if the execution leads to an error
+     * @since 1.1.0
      */
-    void eval(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response) throws ScriptException;
+    default void eval(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response)
+            throws ScriptException {
+        eval(
+                JakartaToJavaxRequestWrapper.toJavaxRequest(request),
+                JakartaToJavaxResponseWrapper.toJavaxResponse(response));
+    }
+
+    /**
+     * This method will execute / evaluate the wrapped script or precompiled script with the given request.
+     * @param request the request
+     * @param response the response
+     * @throws ScriptException if the execution leads to an error
+     * @deprecated use {@link #eval(HttpServletRequest, HttpServletResponse)} instead
+     */
+    void eval(
+            @NotNull javax.servlet.http.HttpServletRequest request,
+            @NotNull javax.servlet.http.HttpServletResponse response)
+            throws ScriptException;
 
     /**
      * This method will return an input stream if {@code this} unit is backed by a script that can be interpreted.
