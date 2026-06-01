@@ -6,10 +6,25 @@
 
 This module is part of the [Apache Sling](https://sling.apache.org) project.
 
-The bundle currently provides the `org.apache.sling.scripting.spi.bundle` SPI, which allows the
-[Apache Sling Servlets Resolver](https://github.com/apache/sling-org-apache-sling-servlets-resolver) and the
-[Apache Sling Scripting Core](https://github.com/apache/sling-org-apache-sling-scripting-core) to wire up and
-execute bundled scripts (precompiled or not) in order to render HTTP requests.
+This bundle provides:
+
+- `org.apache.sling.scripting.spi.bundle`: SPI interfaces used by the
+  [Apache Sling Servlets Resolver](https://github.com/apache/sling-org-apache-sling-servlets-resolver) and
+  [Apache Sling Scripting Core](https://github.com/apache/sling-org-apache-sling-scripting-core) to discover and
+  execute bundled scripts (precompiled or interpreted) for request rendering.
+- `org.apache.sling.api.resource.type`: a `ResourceType` value object for parsing Sling resource type strings.
+
+The API is built for Java 17 and supports both Jakarta Servlet API (preferred) and legacy `javax.servlet` API
+for backward compatibility.
+
+## Build and verification
+
+```bash
+mvn clean install
+mvn test
+mvn verify
+mvn spotless:check
+```
 
 ## Integration Tests
 
