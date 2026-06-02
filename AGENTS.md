@@ -90,3 +90,10 @@ target/                          Maven output (do not edit)
 - **Dual servlet APIs**: `BundledRenderUnit.eval(...)` has two overloads — Jakarta (preferred) and javax (deprecated). The Jakarta default method delegates to the javax abstract method for backward compat. New consumers should implement the javax abstract method; it is called by the Jakarta default. Do not remove the javax overload.
 - **No OSGi runtime in tests**: tests run in plain JVM; do not reference `BundleContext` or OSGi framework APIs in test code without mocking.
 - The `target/` directory contains a committed baseline JAR snapshot (`target/baseline/`). This is intentional — managed by bnd-baseline-maven-plugin, not by hand.
+
+# Security
+
+<!-- sling-security-default:start -->
+The threat model for this project is https://github.com/apache/sling/blob/master/docs/threat-model.md .
+<!-- sling-security-default:end -->
+
